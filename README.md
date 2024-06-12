@@ -3,9 +3,9 @@
 A fitness app with burpee, ab and mountain climber as exercises. Exercise count
 automatically resets every day.
 
-# Main Screen
+# Screens
 
-![](./images/screen1.png)
+![](./images/screen1.png) ![](./images/screen2.png) ![](./images/screen3.png)
 
 # Images
 
@@ -25,3 +25,11 @@ The **exercise_mountainclimber.webp** file was obtained from [Feel](https://gitl
 source code repository. Licensed under the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/).
 Derived from a triangulation by kettenfett, which was derived from ["Mountain Climber"](https://vimeo.com/149362946)
 by Dr. Greg Wells on YouTube, published under the [CC BY 3.0 license](https://creativecommons.org/licenses/by/3.0/legalcode).
+
+# To Do
+
+- [X] Update screen images from README
+- [ ] Add fields to quantities of each exercise
+- [X] Refactor source code
+- [ ] Update main screen after delete all activities, without the need of quit and launch the app
+- [ ] Confirmation after press the button "Delete all activities"

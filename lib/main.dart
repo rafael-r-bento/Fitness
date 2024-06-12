@@ -1,5 +1,5 @@
 /*
- * FitnessBAM - a fitness app with 3 pre-defined exercises
+ * FitnessBAM - a fitness app with 3 predefined exercises
  * Copyright (C) 2023  Rafael Bento
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,11 @@
 
 import 'dart:async';
 import 'dart:ui' as ui;
+import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
+import 'package:flutter_charts/flutter_charts.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:sqflite/sqflite.dart';
 
@@ -60,6 +62,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   ui.Image? image1, image2, image3;
   bool isImage1Loaded = false, isImage2Loaded = false, isImage3Loaded = false;
   String fileData = '';
+  int _selectedIndex = 0;
+  List<Map<String, dynamic?>>? expectedList;
 
   MyHomePageState() {
     activityNow = Activity(
@@ -139,6 +143,16 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     return completer.future;
   }
 
+  bool isImageLoaded(ui.Image? imgFile) {
+    if (imgFile != null) {
+      if (imgFile == image1 || imgFile == image2 || imgFile == image3) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+
   Future<void> setupDatabase() async {
     database = await openDatabase(
       path.join(await getDatabasesPath(), 'fitness_database.db'),
@@ -186,7 +200,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   Future<void> updateActivity(
-      int iAb, int iBurpee, int iMountainClimber) async {
+    int iAb, int iBurpee, int iMountainClimber) async {
     final db = database;
     setState(() {
       activityNow?.ab += iAb;
@@ -264,13 +278,11 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     title: const Text('Delete all activities'),
                     onTap: _deleteAllActivities,
                   ),
-                  Divider(),
                   ListTile(
                     leading: const Icon(Icons.info),
                     title: const Text('About FitnessBAM'),
                     onTap: _showAboutDialog,
                   ),
-                  Divider(),
                 ],
               ),
             ],
@@ -280,49 +292,100 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     ));
   }
 
-  Widget _buildActivityCircle1(double sizeCustomPaint) {
-    if (isImage1Loaded) {
+  Widget _buildActivityCircle(double sizeCustomPaint, int? activityValue, ui.Image? imgFile) {
+    if (isImageLoaded(imgFile)) {
       return CustomPaint(
         size: Size(
           sizeCustomPaint,
           sizeCustomPaint,
         ),
         painter:
-            ActivityCircle(value: activityNow!.ab, limit: 50, image: image1!),
+            ActivityCircle(value: activityValue!, limit: 50, image: imgFile!),
       );
     } else {
       return const Center(child: Text('loading'));
     }
   }
 
-  Widget _buildActivityCircle2(double sizeCustomPaint) {
-    if (isImage2Loaded) {
-      return CustomPaint(
-        size: Size(
-          sizeCustomPaint,
-          sizeCustomPaint,
-        ),
-        painter: ActivityCircle(
-            value: activityNow!.burpee, limit: 50, image: image2!),
-      );
-    } else {
-      return const Center(child: Text('loading'));
-    }
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-  Widget _buildActivityCircle3(double sizeCustomPaint) {
-    if (isImage3Loaded) {
-      return CustomPaint(
-        size: Size(
-          sizeCustomPaint,
-          sizeCustomPaint,
-        ),
-        painter: ActivityCircle(
-            value: activityNow!.mountainClimber, limit: 50, image: image3!),
-      );
-    } else {
-      return const Center(child: Text('loading'));
+  Future<List<Map<String, dynamic?>>?> getList() async {
+    await verifyDatabase();
+    return await database?.rawQuery('SELECT * FROM Activities');
+  }
+
+  Widget chartToRun() {
+    getList().then((list){
+      if (list != null)
+        this.expectedList = [...list!];
+    });
+    List<double> abCounter = [];
+    List<double> burpeeCounter = [];
+    List<double> mountainClimberCounter = [];
+    if (expectedList != null && expectedList!.length != null) {
+      if (expectedList!.length > 30) {
+        while (expectedList!.length > 30) {
+	  expectedList!.remove(0);
+	}
+      }
+      else if (expectedList!.length < 30) {
+        while (expectedList!.length < 30) {
+          expectedList!.insert(0, {'date': "", 'ab': 0, 'burpee': 0, 'mountainClimber': 0});
+        }
+      }
+      expectedList!.forEach((element) => {
+        abCounter.add(element["ab"].toDouble()),
+        burpeeCounter.add(element["burpee"].toDouble()),
+        mountainClimberCounter.add(element["mountainClimber"].toDouble()),
+      });
     }
+    else {
+      abCounter = [1.0, 0.0, 0.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+
+      burpeeCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 7.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+
+      mountainClimberCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 50.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+    }
+    LabelLayoutStrategy? xContainerLabelLayoutStrategy;
+    ChartData chartData;
+    ChartOptions chartOptions = const ChartOptions();
+    chartData = ChartData(
+      dataRows: [
+        burpeeCounter,
+        abCounter,
+        mountainClimberCounter,
+      ],
+      xUserLabels: const ['', '', '' ,'', '', '', '', '', '', '',
+	'', '', '' ,'', '', '', '', '', '', '',
+	'', '', '' ,'', '', '', '', '', '', ''],
+      dataRowsLegends: const [
+        'Burpee',
+        'Ab',
+        'Mountain Climber',
+      ],
+      chartOptions: chartOptions,
+    );
+    var verticalBarChartContainer = VerticalBarChartTopContainer(
+      chartData: chartData,
+      xContainerLabelLayoutStrategy: xContainerLabelLayoutStrategy,
+    );
+
+    var verticalBarChart = VerticalBarChart(
+      painter: VerticalBarChartPainter(
+        verticalBarChartContainer: verticalBarChartContainer,
+      ),
+    );
+    return verticalBarChart;
   }
 
   @override
@@ -339,7 +402,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           ),
         ],
       ),
-      body: Column(
+      body: _selectedIndex == 0 ?
+        Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Row(
@@ -352,8 +416,11 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     onTap: () {
                       updateActivity(0, 10, 0);
                     },
-                    child: _buildActivityCircle2(
-                        MediaQuery.of(context).size.width * 0.25),
+                    child: _buildActivityCircle(
+                        MediaQuery.of(context).size.width * 0.25,
+			activityNow?.burpee,
+			image2,
+		    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -378,8 +445,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     onTap: () {
                       updateActivity(10, 0, 0);
                     },
-                    child: _buildActivityCircle1(
-                        MediaQuery.of(context).size.width * 0.25),
+                    child: _buildActivityCircle(
+                        MediaQuery.of(context).size.width * 0.25, activityNow?.ab, image1),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -403,8 +470,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     onTap: () {
                       updateActivity(0, 0, 10);
                     },
-                    child: _buildActivityCircle3(
-                        MediaQuery.of(context).size.width * 0.25),
+                    child: _buildActivityCircle(
+                        MediaQuery.of(context).size.width * 0.25, activityNow?.mountainClimber, image3),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -420,6 +487,35 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             ],
           ),
         ],
+      ) :
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+	children: <Widget>[
+          Expanded(
+            child: Row(
+	      crossAxisAlignment: CrossAxisAlignment.stretch,
+	      children: <Widget>[
+	        Expanded(
+		  child: chartToRun(),
+		),
+	      ],
+	    ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+	  BottomNavigationBarItem(
+	    icon: Icon(Icons.home),
+	    label: 'Home',
+	  ),
+	  BottomNavigationBarItem(
+	    icon: Icon(Icons.show_chart),
+	    label: 'Chart',
+	  ),
+	],
+	currentIndex: _selectedIndex,
+	onTap: _onItemTapped,
       ),
     );
   }
