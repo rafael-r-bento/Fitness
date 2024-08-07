@@ -1,6 +1,6 @@
 /*
- * FitnessBAM - a fitness app with 3 pre-defined exercises
- * Copyright (C) 2023  Rafael Bento
+ * FitnessAMP - a fitness app with 3 pre-defined exercises
+ * Copyright (C) 2023-2024  Rafael Bento
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

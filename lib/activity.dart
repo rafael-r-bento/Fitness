@@ -1,6 +1,6 @@
 /*
- * FitnessBAM - a fitness app with 3 pre-defined exercises
- * Copyright (C) 2023  Rafael Bento
+ * FitnessAMP - a fitness app with 3 pre-defined exercises
+ * Copyright (C) 2023-2024  Rafael Bento
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +19,18 @@
 class Activity {
   final String date;
   int ab;
-  int burpee;
   int mountainClimber;
+  int pushUps;
 
   Activity(
-      {this.date = "", this.ab = 0, this.burpee = 0, this.mountainClimber = 0});
+      {this.date = "", this.ab = 0, this.mountainClimber = 0, this.pushUps = 0});
 
   Map<String, dynamic> toMap() {
     return {
       'date': date,
       'ab': ab,
-      'burpee': burpee,
       'mountainClimber': mountainClimber,
+      'pushUps': pushUps,
     };
   }
 }

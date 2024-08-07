@@ -1,6 +1,6 @@
-# FitnessBAM
+# FitnessAMP
 
-A fitness app with burpee, ab and mountain climber as exercises. Exercise count
+A fitness app with ab, mountain climber and push ups as exercises. Exercise count
 automatically resets every day.
 
 # Screens
@@ -11,11 +11,6 @@ automatically resets every day.
 
 All images are released under the CC BY-SA 4.0 license.
 
-The **exercise_4countburpee.webp** file was obtained from [Feeel](https://gitlab.com/enjoyingfoss/feeel) app source
-code repository. Licensed under the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/).
-Derived from a triangulation by kettenfett, which was derived from ["The 6-Minute Sweat Workout: Burpee"](https://www.youtube.com/watch?v=sHLu6-liUL0)
-by ExperienceLifeMag on YouTube, published under the [CC BY 3.0 license](https://creativecommons.org/licenses/by/3.0/legalcode).
-
 The **exercise_abcrunch.webp** file was obtained from [Feeel](https://gitlab.com/enjoyingfoss/feeel) app source code
 repository. Licensed under the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/).
 Derived from bwanderd's [\"26 Abs 1\"](https://www.flickr.com/photos/86598533@N04/8252254965),
@@ -25,6 +20,10 @@ The **exercise_mountainclimber.webp** file was obtained from [Feel](https://gitl
 source code repository. Licensed under the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/).
 Derived from a triangulation by kettenfett, which was derived from ["Mountain Climber"](https://vimeo.com/149362946)
 by Dr. Greg Wells on YouTube, published under the [CC BY 3.0 license](https://creativecommons.org/licenses/by/3.0/legalcode).
+
+The **exercise_pushups.webp** file was obtained from [Feel](https://gitlab.com/enjoyingfoss/feeel) app
+source code repository. Licensed under the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/).
+Derived from Keiji Yoshiki's [push-up photo](https://www.pexels.com/photo/adult-athlete-body-exercise-176782/), published under the [CC0 license](https://creativecommons.org/publicdomain/zero/1.0/).
 
 # To Do
 

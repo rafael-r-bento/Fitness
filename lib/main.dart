@@ -1,6 +1,6 @@
 /*
- * FitnessBAM - a fitness app with 3 predefined exercises
- * Copyright (C) 2023  Rafael Bento
+ * FitnessAMP - a fitness app with 3 predefined exercises
+ * Copyright (C) 2023-2024  Rafael Bento
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,10 +39,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FitnessBAM',
+      title: 'FitnessAMP',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const MyHomePage(title: 'FitnessBAM'),
+      home: const MyHomePage(title: 'FitnessAMP'),
     );
   }
 }
@@ -69,8 +69,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     activityNow = Activity(
       date: DateTime.now().toIso8601String().substring(0, 10),
       ab: 0,
-      burpee: 0,
       mountainClimber: 0,
+      pushUps: 0,
     );
     setupDatabase().then((_) {
       verifyDatabase();
@@ -82,7 +82,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     getTextFromFile();
     LicenseRegistry.addLicense(() async* {
       yield LicenseEntryWithLineBreaks(
-        ["FitnessBAM"],
+        ["FitnessAMP"],
         fileData,
       );
     });
@@ -106,8 +106,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         activityNow = Activity(
           date: DateTime.now().toIso8601String().substring(0, 10),
           ab: 0,
-          burpee: 0,
           mountainClimber: 0,
+	  pushUps: 0,
         );
       });
       insertActivity(activityNow);
@@ -118,9 +118,9 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     final ByteData data1 =
         await rootBundle.load('images/exercise_abcrunch.webp');
     final ByteData data2 =
-        await rootBundle.load('images/exercise_4countburpee.webp');
-    final ByteData data3 =
         await rootBundle.load('images/exercise_mountainclimber.webp');
+    final ByteData data3 =
+        await rootBundle.load('images/exercise_pushups.webp');
     image1 = await loadImage(Uint8List.view(data1.buffer), 1);
     image2 = await loadImage(Uint8List.view(data2.buffer), 2);
     image3 = await loadImage(Uint8List.view(data3.buffer), 3);
@@ -160,8 +160,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         await db.execute('''CREATE TABLE Activities (
           date TEXT PRIMARY KEY,
           ab INTEGER,
-          burpee INTEGER,
-          mountainClimber INTEGER
+          mountainClimber INTEGER,
+	  pushUps INTEGER
         )''');
       },
       version: 1,
@@ -172,7 +172,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     Database? db = database;
 
     List<Map<String, dynamic>>? maps = await db?.query('Activities',
-        columns: ['date', 'ab', 'burpee', 'mountainClimber'],
+        columns: ['date', 'ab', 'mountainClimber', 'pushUps'],
         where: 'date = ?',
         whereArgs: [activityNow?.date]);
 
@@ -180,8 +180,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       if (maps!.isNotEmpty) {
         setState(() {
           activityNow?.ab = maps.first['ab'];
-          activityNow?.burpee = maps.first['burpee'];
           activityNow?.mountainClimber = maps.first['mountainClimber'];
+	  activityNow?.pushUps = maps.first['pushUps'];
         });
       } else if (maps.isEmpty) {
         await insertActivity(activityNow);
@@ -200,12 +200,12 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   Future<void> updateActivity(
-    int iAb, int iBurpee, int iMountainClimber) async {
+    int iAb, int iMountainClimber, int iPushUps) async {
     final db = database;
     setState(() {
       activityNow?.ab += iAb;
-      activityNow?.burpee += iBurpee;
       activityNow?.mountainClimber += iMountainClimber;
+      activityNow?.pushUps += iPushUps;
     });
 
     await db?.update(
@@ -236,8 +236,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void _showAboutDialog() async {
     showAboutDialog(
         context: context,
-        applicationName: "FitnessBAM",
-        applicationVersion: "0.1.0",
+        applicationName: "FitnessAMP",
+        applicationVersion: "0.3.0",
         applicationIcon: const SizedBox(
           width: 48,
           height: 48,
@@ -255,8 +255,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     final Database? db = database;
     await db?.delete('Activities');
     activityNow?.ab = 0;
-    activityNow?.burpee = 0;
     activityNow?.mountainClimber = 0;
+    activityNow?.pushUps = 0;
     await verifyDatabase();
   }
 
@@ -280,7 +280,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   ),
                   ListTile(
                     leading: const Icon(Icons.info),
-                    title: const Text('About FitnessBAM'),
+                    title: const Text('About FitnessAMP'),
                     onTap: _showAboutDialog,
                   ),
                 ],
@@ -324,8 +324,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         this.expectedList = [...list!];
     });
     List<double> abCounter = [];
-    List<double> burpeeCounter = [];
     List<double> mountainClimberCounter = [];
+    List<double> pushUpsCounter = [];
     if (expectedList != null && expectedList!.length != null) {
       if (expectedList!.length > 30) {
         while (expectedList!.length > 30) {
@@ -334,13 +334,13 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       }
       else if (expectedList!.length < 30) {
         while (expectedList!.length < 30) {
-          expectedList!.insert(0, {'date': "", 'ab': 0, 'burpee': 0, 'mountainClimber': 0});
+          expectedList!.insert(0, {'date': "", 'ab': 0, 'mountainClimber': 0, 'pushUps': 0});
         }
       }
       expectedList!.forEach((element) => {
         abCounter.add(element["ab"].toDouble()),
-        burpeeCounter.add(element["burpee"].toDouble()),
         mountainClimberCounter.add(element["mountainClimber"].toDouble()),
+	pushUpsCounter.add(element["pushUps"].toDouble()),
       });
     }
     else {
@@ -348,30 +348,30 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
 
-      burpeeCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.0, 0.0, 7.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
-
       mountainClimberCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 	0.0, 0.0, 50.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+
+      pushUpsCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 7.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
     }
     LabelLayoutStrategy? xContainerLabelLayoutStrategy;
     ChartData chartData;
     ChartOptions chartOptions = const ChartOptions();
     chartData = ChartData(
       dataRows: [
-        burpeeCounter,
         abCounter,
         mountainClimberCounter,
+	pushUpsCounter,
       ],
       xUserLabels: const ['', '', '' ,'', '', '', '', '', '', '',
 	'', '', '' ,'', '', '', '', '', '', '',
 	'', '', '' ,'', '', '', '', '', '', ''],
       dataRowsLegends: const [
-        'Burpee',
         'Ab',
         'Mountain Climber',
+        'Push Ups',
       ],
       chartOptions: chartOptions,
     );
@@ -414,22 +414,22 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      updateActivity(0, 10, 0);
+                      updateActivity(10, 0, 0);
                     },
                     child: _buildActivityCircle(
                         MediaQuery.of(context).size.width * 0.25,
-			activityNow?.burpee,
-			image2,
+			activityNow?.ab,
+			image1,
 		    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Text('${activityNow?.burpee}/50',
+                    child: Text('${activityNow?.ab}/50',
                         style: const TextStyle(fontSize: 32.0)),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text('Burpee'),
+                    child: Text('Ab'),
                   ),
                 ],
               ),
@@ -443,19 +443,19 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      updateActivity(10, 0, 0);
+                      updateActivity(0, 10, 0);
                     },
                     child: _buildActivityCircle(
-                        MediaQuery.of(context).size.width * 0.25, activityNow?.ab, image1),
+                        MediaQuery.of(context).size.width * 0.25, activityNow?.mountainClimber, image2),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Text("${activityNow?.ab}/50",
+                    child: Text("${activityNow?.mountainClimber}/50",
                         style: const TextStyle(fontSize: 32.0)),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text('Ab'),
+                    child: Text('Mountain Climber'),
                   ),
                 ],
               ),
@@ -471,16 +471,16 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       updateActivity(0, 0, 10);
                     },
                     child: _buildActivityCircle(
-                        MediaQuery.of(context).size.width * 0.25, activityNow?.mountainClimber, image3),
+                        MediaQuery.of(context).size.width * 0.25, activityNow?.pushUps, image3),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Text('${activityNow?.mountainClimber}/50',
+                    child: Text('${activityNow?.pushUps}/50',
                         style: const TextStyle(fontSize: 32.0)),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 10),
-                    child: Text('Mountain Climber'),
+                    child: Text('Push Ups'),
                   ),
                 ],
               ),

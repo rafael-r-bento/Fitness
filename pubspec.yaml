@@ -1,9 +1,9 @@
-name: FitnessBAM
-description: "A fitness app with burpee, ab and mountain climber as exercises."
+name: FitnessAMP
+description: "A fitness app with ab, mountain climber and push ups as exercises."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.2.0
+version: 0.3.0
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -31,7 +31,7 @@ flutter:
 
   assets:
     - images/burpees_in_room.png
-    - images/exercise_4countburpee.webp
+    - images/exercise_pushups.webp
     - images/exercise_abcrunch.webp
     - images/exercise_mountainclimber.webp
     - COPYING
