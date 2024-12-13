@@ -64,6 +64,10 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   String fileData = '';
   int _selectedIndex = 0;
   List<Map<String, dynamic?>>? expectedList;
+  static var countdownDuration = Duration(minutes: 10);
+  Duration duration = Duration();
+  Timer? timer;
+  bool countDown = true;
 
   MyHomePageState() {
     activityNow = Activity(
@@ -79,6 +83,15 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    var hours;
+    var mints;
+    var secs;
+    hours = int.parse("00");
+    mints = int.parse("00");
+    secs = int.parse("00");
+    countdownDuration = Duration(hours: hours, minutes: mints, seconds: secs);
+    startTimer();
+    reset();
     getTextFromFile();
     LicenseRegistry.addLicense(() async* {
       yield LicenseEntryWithLineBreaks(
@@ -111,6 +124,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         );
       });
       insertActivity(activityNow);
+      reset();
     }
   }
 
@@ -388,6 +402,71 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     return verticalBarChart;
   }
 
+  void reset() {
+    if (countDown) {
+      setState(() => duration = countdownDuration);
+    } else {
+      setState(() => duration = Duration());
+    }
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+  }
+
+  void addTime() {
+    final addSeconds = 1;
+    setState(() {
+      final seconds = duration.inSeconds + addSeconds;
+      if (seconds > 3600) {
+        timer?.cancel();
+      } else {
+        duration = Duration(seconds: seconds);
+      }
+    });
+  }
+
+  Widget buildTime() {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      buildTimeCard(time: hours, header: 'HOURS'),
+      SizedBox(
+        width: 8,
+      ),
+      buildTimeCard(time: minutes, header: 'MINUTES'),
+      SizedBox(
+        width: 8,
+      ),
+      buildTimeCard(time: seconds, header: 'SECONDS'),
+    ]);
+  }
+
+  Widget buildTimeCard({required String time, required String header}) =>
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(20)),
+            child: Text(
+              time,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 50),
+            ),
+          ),
+          SizedBox(
+            height: 24,
+          ),
+          Text(header, style: TextStyle(color: Colors.black45)),
+        ],
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -433,20 +512,17 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   ),
                 ],
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
               Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
                       updateActivity(0, 10, 0);
                     },
                     child: _buildActivityCircle(
-                        MediaQuery.of(context).size.width * 0.25, activityNow?.mountainClimber, image2),
+                        MediaQuery.of(context).size.width * 0.25,
+                        activityNow?.mountainClimber,
+                        image2),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -471,7 +547,9 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       updateActivity(0, 0, 10);
                     },
                     child: _buildActivityCircle(
-                        MediaQuery.of(context).size.width * 0.25, activityNow?.pushUps, image3),
+                        MediaQuery.of(context).size.width * 0.25,
+                        activityNow?.pushUps,
+                        image3),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -481,6 +559,21 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   const Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: Text('Push Ups'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 30, bottom: 30),
+                    child: buildTime()
                   ),
                 ],
               ),
