@@ -20,17 +20,17 @@ class Activity {
   final String date;
   int ab;
   int mountainClimber;
-  int pushUps;
+  int biceps;
 
   Activity(
-      {this.date = "", this.ab = 0, this.mountainClimber = 0, this.pushUps = 0});
+      {this.date = "", this.ab = 0, this.mountainClimber = 0, this.biceps = 0});
 
   Map<String, dynamic> toMap() {
     return {
       'date': date,
       'ab': ab,
       'mountainClimber': mountainClimber,
-      'pushUps': pushUps,
+      'biceps': biceps,
     };
   }
 }

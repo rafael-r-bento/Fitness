@@ -1,5 +1,5 @@
-name: FitnessAMP
-description: "A fitness app with ab, mountain climber and push ups as exercises."
+name: Fitness
+description: "A fitness app with ab, mountain climber and  as exercises."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -31,7 +31,7 @@ flutter:
 
   assets:
     - images/burpees_in_room.png
-    - images/exercise_pushups.webp
-    - images/exercise_abcrunch.webp
-    - images/exercise_mountainclimber.webp
+    - images/alternatingBicepCurls.webp
+    - images/abCrunches.webp
+    - images/mountainClimbers.webp
     - COPYING

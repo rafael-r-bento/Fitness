@@ -1,5 +1,5 @@
 /*
- * FitnessAMP - a fitness app with 3 predefined exercises
+ * Fitness - a fitness app with 3 predefined exercises
  * Copyright (C) 2023-2024  Rafael Bento
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,10 +39,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FitnessAMP',
+      title: 'Fitness',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const MyHomePage(title: 'FitnessAMP'),
+      home: const MyHomePage(title: 'Fitness'),
     );
   }
 }
@@ -74,7 +74,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       date: DateTime.now().toIso8601String().substring(0, 10),
       ab: 0,
       mountainClimber: 0,
-      pushUps: 0,
+      biceps: 0,
     );
     setupDatabase().then((_) {
       verifyDatabase();
@@ -95,7 +95,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     getTextFromFile();
     LicenseRegistry.addLicense(() async* {
       yield LicenseEntryWithLineBreaks(
-        ["FitnessAMP"],
+        ["Fitness"],
         fileData,
       );
     });
@@ -120,7 +120,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           date: DateTime.now().toIso8601String().substring(0, 10),
           ab: 0,
           mountainClimber: 0,
-	  pushUps: 0,
+	        biceps: 0,
         );
       });
       insertActivity(activityNow);
@@ -130,11 +130,11 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   Future<void> initImages() async {
     final ByteData data1 =
-        await rootBundle.load('images/exercise_abcrunch.webp');
+        await rootBundle.load('images/abCrunches.webp');
     final ByteData data2 =
-        await rootBundle.load('images/exercise_mountainclimber.webp');
+        await rootBundle.load('images/mountainClimbers.webp');
     final ByteData data3 =
-        await rootBundle.load('images/exercise_pushups.webp');
+        await rootBundle.load('images/alternatingBicepCurls.webp');
     image1 = await loadImage(Uint8List.view(data1.buffer), 1);
     image2 = await loadImage(Uint8List.view(data2.buffer), 2);
     image3 = await loadImage(Uint8List.view(data3.buffer), 3);
@@ -175,7 +175,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           date TEXT PRIMARY KEY,
           ab INTEGER,
           mountainClimber INTEGER,
-	  pushUps INTEGER
+	        biceps INTEGER
         )''');
       },
       version: 1,
@@ -186,7 +186,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     Database? db = database;
 
     List<Map<String, dynamic>>? maps = await db?.query('Activities',
-        columns: ['date', 'ab', 'mountainClimber', 'pushUps'],
+        columns: ['date', 'ab', 'mountainClimber', 'biceps'],
         where: 'date = ?',
         whereArgs: [activityNow?.date]);
 
@@ -195,7 +195,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         setState(() {
           activityNow?.ab = maps.first['ab'];
           activityNow?.mountainClimber = maps.first['mountainClimber'];
-	  activityNow?.pushUps = maps.first['pushUps'];
+	        activityNow?.biceps = maps.first['biceps'];
         });
       } else if (maps.isEmpty) {
         await insertActivity(activityNow);
@@ -214,12 +214,12 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   Future<void> updateActivity(
-    int iAb, int iMountainClimber, int iPushUps) async {
+    int iAb, int iMountainClimber, int iBiceps) async {
     final db = database;
     setState(() {
       activityNow?.ab += iAb;
       activityNow?.mountainClimber += iMountainClimber;
-      activityNow?.pushUps += iPushUps;
+      activityNow?.biceps += iBiceps;
     });
 
     await db?.update(
@@ -250,7 +250,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void _showAboutDialog() async {
     showAboutDialog(
         context: context,
-        applicationName: "FitnessAMP",
+        applicationName: "Fitness",
         applicationVersion: "0.3.0",
         applicationIcon: const SizedBox(
           width: 48,
@@ -270,7 +270,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     await db?.delete('Activities');
     activityNow?.ab = 0;
     activityNow?.mountainClimber = 0;
-    activityNow?.pushUps = 0;
+    activityNow?.biceps = 0;
     await verifyDatabase();
   }
 
@@ -294,7 +294,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   ),
                   ListTile(
                     leading: const Icon(Icons.info),
-                    title: const Text('About FitnessAMP'),
+                    title: const Text('About Fitness'),
                     onTap: _showAboutDialog,
                   ),
                 ],
@@ -314,7 +314,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           sizeCustomPaint,
         ),
         painter:
-            ActivityCircle(value: activityValue!, limit: 50, image: imgFile!),
+            ActivityCircle(value: activityValue!, limit: 100, image: imgFile!),
       );
     } else {
       return const Center(child: Text('loading'));
@@ -339,36 +339,36 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     });
     List<double> abCounter = [];
     List<double> mountainClimberCounter = [];
-    List<double> pushUpsCounter = [];
+    List<double> bicepsCounter = [];
     if (expectedList != null && expectedList!.length != null) {
       if (expectedList!.length > 30) {
         while (expectedList!.length > 30) {
-	  expectedList!.remove(0);
-	}
+	        expectedList!.remove(0);
+	      }
       }
       else if (expectedList!.length < 30) {
         while (expectedList!.length < 30) {
-          expectedList!.insert(0, {'date': "", 'ab': 0, 'mountainClimber': 0, 'pushUps': 0});
+          expectedList!.insert(0, {'date': "", 'ab': 0, 'mountainClimber': 0, 'biceps': 0});
         }
       }
       expectedList!.forEach((element) => {
         abCounter.add(element["ab"].toDouble()),
         mountainClimberCounter.add(element["mountainClimber"].toDouble()),
-	pushUpsCounter.add(element["pushUps"].toDouble()),
+	      bicepsCounter.add(element["biceps"].toDouble()),
       });
     }
     else {
-      abCounter = [1.0, 0.0, 0.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+      abCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
 
       mountainClimberCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.0, 0.0, 50.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+	      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
 
-      pushUpsCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.0, 0.0, 7.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+      bicepsCounter = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
     }
     LabelLayoutStrategy? xContainerLabelLayoutStrategy;
     ChartData chartData;
@@ -377,7 +377,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       dataRows: [
         abCounter,
         mountainClimberCounter,
-	pushUpsCounter,
+	      bicepsCounter,
       ],
       xUserLabels: const ['', '', '' ,'', '', '', '', '', '', '',
 	'', '', '' ,'', '', '', '', '', '', '',
@@ -385,7 +385,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       dataRowsLegends: const [
         'Ab',
         'Mountain Climber',
-        'Push Ups',
+        'Biceps',
       ],
       chartOptions: chartOptions,
     );
@@ -426,47 +426,6 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     });
   }
 
-  Widget buildTime() {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = twoDigits(duration.inHours);
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      buildTimeCard(time: hours, header: 'HOURS'),
-      SizedBox(
-        width: 8,
-      ),
-      buildTimeCard(time: minutes, header: 'MINUTES'),
-      SizedBox(
-        width: 8,
-      ),
-      buildTimeCard(time: seconds, header: 'SECONDS'),
-    ]);
-  }
-
-  Widget buildTimeCard({required String time, required String header}) =>
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
-            child: Text(
-              time,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 50),
-            ),
-          ),
-          SizedBox(
-            height: 24,
-          ),
-          Text(header, style: TextStyle(color: Colors.black45)),
-        ],
-      );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -483,133 +442,118 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       ),
       body: _selectedIndex == 0 ?
         Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      updateActivity(10, 0, 0);
-                    },
-                    child: _buildActivityCircle(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        updateActivity(10, 0, 0);
+                      },
+                      child: _buildActivityCircle(
                         MediaQuery.of(context).size.width * 0.25,
-			activityNow?.ab,
-			image1,
-		    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text('${activityNow?.ab}/50',
+			                  activityNow?.ab,
+			                  image1,
+		                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text('${activityNow?.ab}/100',
                         style: const TextStyle(fontSize: 32.0)),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Text('Ab'),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      updateActivity(0, 10, 0);
-                    },
-                    child: _buildActivityCircle(
+                      ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text('Ab'),
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        updateActivity(0, 10, 0);
+                      },
+                      child: _buildActivityCircle(
                         MediaQuery.of(context).size.width * 0.25,
                         activityNow?.mountainClimber,
                         image2),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text("${activityNow?.mountainClimber}/50",
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text("${activityNow?.mountainClimber}/100",
                         style: const TextStyle(fontSize: 32.0)),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Text('Mountain Climber'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      updateActivity(0, 0, 10);
-                    },
-                    child: _buildActivityCircle(
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text('Mountain Climber'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        updateActivity(0, 0, 10);
+                      },
+                      child: _buildActivityCircle(
                         MediaQuery.of(context).size.width * 0.25,
-                        activityNow?.pushUps,
-                        image3),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text('${activityNow?.pushUps}/50',
-                        style: const TextStyle(fontSize: 32.0)),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Text('Push Ups'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 30, bottom: 30),
-                    child: buildTime()
+                          activityNow?.biceps,
+                          image3),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text('${activityNow?.biceps}/100',
+                          style: const TextStyle(fontSize: 32.0)),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text('Biceps'),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
+          ) :
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+	          children: <Widget>[
+              Expanded(
+                child: Row(
+	                crossAxisAlignment: CrossAxisAlignment.stretch,
+	                children: <Widget>[
+	                  Expanded(
+		                  child: chartToRun(),
+		                ),
+	                ],
+	              ),
+              ),
+            ],
           ),
-        ],
-      ) :
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-	children: <Widget>[
-          Expanded(
-            child: Row(
-	      crossAxisAlignment: CrossAxisAlignment.stretch,
-	      children: <Widget>[
-	        Expanded(
-		  child: chartToRun(),
-		),
-	      ],
-	    ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+	            BottomNavigationBarItem(
+	              icon: Icon(Icons.home),
+	              label: 'Home',
+	            ),
+	            BottomNavigationBarItem(
+	              icon: Icon(Icons.show_chart),
+	              label: 'Chart',
+	            ),
+	          ],
+	          currentIndex: _selectedIndex,
+	          onTap: _onItemTapped,
           ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-	  BottomNavigationBarItem(
-	    icon: Icon(Icons.home),
-	    label: 'Home',
-	  ),
-	  BottomNavigationBarItem(
-	    icon: Icon(Icons.show_chart),
-	    label: 'Chart',
-	  ),
-	],
-	currentIndex: _selectedIndex,
-	onTap: _onItemTapped,
-      ),
-    );
-  }
+        );
+      }
 }
