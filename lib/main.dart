@@ -1,6 +1,6 @@
 /*
  * Fitness - a fitness app with 3 predefined exercises
- * Copyright (C) 2023-2024  Rafael Bento
+ * Copyright (C) 2023-2025  Rafael Bento
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,7 +259,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             image: AssetImage('images/burpees_in_room.png'),
           ),
         ),
-        applicationLegalese: "Copyright (C) 2023  Rafael Bento\n\n"
+        applicationLegalese: "Copyright (C) 2023-2025  Rafael Bento\n\n"
             "This program comes with ABSOLUTELY NO WARRANTY. This is "
             "free software, and you are welcome to redistribute it under "
             "certain conditions; press the 'View licenses' button for details.");
