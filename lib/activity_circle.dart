@@ -1,5 +1,5 @@
 /*
- * Fitness - a fitness app with 3 pre-defined exercises
+ * Fitness - a fitness app
  * Copyright (C) 2023-2025  Rafael Bento
  *
  * This program is free software: you can redistribute it and/or modify

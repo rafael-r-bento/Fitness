@@ -1,6 +1,6 @@
 /*
- * Fitness - a fitness app with 3 pre-defined exercises
- * Copyright (C) 2023-2025  Rafael Bento
+ * Fitness - a fitness app
+ * Copyright (C) 2025  Rafael Bento
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,21 +16,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class Activity {
-  final String date;
-  int ab;
-  int mountainClimber;
-  int biceps;
+class Weight {
+  final String activity;
+  String message;
 
-  Activity(
-      {this.date = "", this.ab = 0, this.mountainClimber = 0, this.biceps = 0});
+  Weight(
+      {this.activity = "",
+      this.message = ""});
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object?> toMap() {
     return {
-      'date': date,
-      'ab': ab,
-      'mountainClimber': mountainClimber,
-      'biceps': biceps,
+      'activity': activity,
+      'message': message
     };
   }
 }
