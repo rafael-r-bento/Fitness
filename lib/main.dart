@@ -430,65 +430,98 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     );
   }
 
+  List<DateTime> _daysBetween(DateTime start, DateTime end) {
+    final days = <DateTime>[];
+    for (int i = 1; i <= end.difference(start).inDays; i++) {
+      days.add(start.add(Duration(days: i)));
+    }
+    return days;
+  }
+
+  Future<DateTime?> _getLastSavedDate(Database? db) async {
+    if (db == null) return null;
+    final result = await db.query(
+      'Activities',
+      columns: ['date'],
+      orderBy: 'date DESC',
+      limit: 1
+    );
+
+    if (result.isEmpty) return null;
+    return DateTime.parse(result.first['date'] as String);
+  }
+
   Future<void> verifyDatabase() async {
     Database? db = database;
+    final DateTime today = DateTime.now();
+
+    final DateTime? lastSavedDate = await _getLastSavedDate(db);
+
+    if (lastSavedDate != null) {
+      final missingDays = _daysBetween(
+        lastSavedDate,
+        DateTime(today.year, today.month, today.day)
+      );
+
+      for (final day in missingDays) {
+        final activity = Activities(
+          date: day.toIso8601String().substring(0, 10),
+          remadaArticuladaSupinada: 0,
+          puxadaArticulada: 0,
+          supinoVertical: 0,
+          crucifixo: 0,
+          desenvolvimento: 0,
+          biceps: 0,
+          elevacaoLateral: 0,
+          abdominalSupraSolo: 0,
+          esteira1: 0,
+          cadeiraFlexora: 0,
+          cadeiraExtensora: 0,
+          legHorizontal: 0,
+          cadeiraAbdutora: 0,
+          panturrilhaSentado: 0,
+          leg45: 0,
+          esteira2: 0,
+        );
+        await insertActivities(activity);
+      }
+    }
 
     List<Map<String, dynamic>>? mapsActivities = await db?.query('Activities',
-        columns: [
-          'date',
-          'remadaArticuladaSupinada',
-          'puxadaArticulada',
-          'supinoVertical',
-          'crucifixo',
-          'desenvolvimento',
-          'biceps',
-          'elevacaoLateral',
-          'abdominalSupraSolo',
-          'esteira1',
-          'cadeiraFlexora',
-          'cadeiraExtensora',
-          'legHorizontal',
-          'cadeiraAbdutora',
-          'panturrilhaSentado',
-          'leg45',
-          'esteira2'
-        ],
         where: 'date = ?',
         whereArgs: [activitiesNow?.date]);
 
-    if (mapsActivities?.length != null) {
-      if (mapsActivities!.isNotEmpty) {
-        setState(() {
-          activitiesNow?.remadaArticuladaSupinada =
-              mapsActivities.first['remadaArticuladaSupinada'];
-          activitiesNow?.puxadaArticulada =
-              mapsActivities.first['puxadaArticulada'];
-          activitiesNow?.supinoVertical =
-              mapsActivities.first['supinoVertical'];
-          activitiesNow?.crucifixo = mapsActivities.first['crucifixo'];
-          activitiesNow?.desenvolvimento =
-              mapsActivities.first['desenvolvimento'];
-          activitiesNow?.biceps = mapsActivities.first['biceps'];
-          activitiesNow?.elevacaoLateral =
-              mapsActivities.first['elevacaoLateral'];
-          activitiesNow?.abdominalSupraSolo =
-              mapsActivities.first['abdominalSupraSolo'];
-          activitiesNow?.esteira1 = mapsActivities.first['esteira1'];
-          activitiesNow?.cadeiraFlexora =
-              mapsActivities.first['cadeiraFlexora'];
-          activitiesNow?.cadeiraExtensora =
-              mapsActivities.first['cadeiraExtensora'];
-          activitiesNow?.legHorizontal = mapsActivities.first['legHorizontal'];
-          activitiesNow?.cadeiraAbdutora =
-              mapsActivities.first['cadeiraAbdutora'];
-          activitiesNow?.panturrilhaSentado =
-              mapsActivities.first['panturrilhaSentado'];
-          activitiesNow?.leg45 = mapsActivities.first['leg45'];
-          activitiesNow?.esteira2 = mapsActivities.first['esteira2'];
-        });
-      } else if (mapsActivities.isEmpty) {
-        await insertActivities(activitiesNow);
-      }
+    if (mapsActivities!.isNotEmpty) {
+      setState(() {
+        activitiesNow?.remadaArticuladaSupinada =
+          mapsActivities.first['remadaArticuladaSupinada'];
+        activitiesNow?.puxadaArticulada =
+          mapsActivities.first['puxadaArticulada'];
+        activitiesNow?.supinoVertical =
+          mapsActivities.first['supinoVertical'];
+        activitiesNow?.crucifixo = mapsActivities.first['crucifixo'];
+        activitiesNow?.desenvolvimento =
+          mapsActivities.first['desenvolvimento'];
+        activitiesNow?.biceps = mapsActivities.first['biceps'];
+        activitiesNow?.elevacaoLateral =
+          mapsActivities.first['elevacaoLateral'];
+        activitiesNow?.abdominalSupraSolo =
+          mapsActivities.first['abdominalSupraSolo'];
+        activitiesNow?.esteira1 = mapsActivities.first['esteira1'];
+        activitiesNow?.cadeiraFlexora =
+          mapsActivities.first['cadeiraFlexora'];
+        activitiesNow?.cadeiraExtensora =
+          mapsActivities.first['cadeiraExtensora'];
+        activitiesNow?.legHorizontal = mapsActivities.first['legHorizontal'];
+        activitiesNow?.cadeiraAbdutora =
+          mapsActivities.first['cadeiraAbdutora'];
+        activitiesNow?.panturrilhaSentado =
+          mapsActivities.first['panturrilhaSentado'];
+        activitiesNow?.leg45 = mapsActivities.first['leg45'];
+        activitiesNow?.esteira2 = mapsActivities.first['esteira2'];
+      });
+    } else if (mapsActivities.isEmpty) {
+      await insertActivities(activitiesNow);
     }
 
     List<Map<String, dynamic>>? weightMaps = await db?.query('Weight');
@@ -498,8 +531,9 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         setState(() {
           for (int i = 0; i < weightMaps.length; i++) {
             weights[i] = Weight(
-                activity: weightMaps[i].values.toList()[0],
-                message: weightMaps[i].values.toList()[1]);
+                activity: weightMaps[i]['activity'],
+                message: weightMaps[i]['message'],
+            );
           }
         });
       } else if (weightMaps.isEmpty) {
