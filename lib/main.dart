@@ -1176,9 +1176,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     List<double> treino2Counter = [];
     if (expectedList != null && expectedList!.length != null) {
       if (expectedList!.length > 30) {
-        while (expectedList!.length > 30) {
-          expectedList!.remove(0);
-        }
+        expectedList = expectedList?.sublist(expectedList!.length - 30);
       } else if (expectedList!.length < 30) {
         while (expectedList!.length < 30) {
           expectedList!.insert(0, {
