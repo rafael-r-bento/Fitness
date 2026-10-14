@@ -33,19 +33,7 @@ flutter:
     - images/burpees_in_room.png
     - images/abdominal_supra_solo.png
     - images/biceps.png
-    - images/cadeira_abdutora.png
-    - images/cadeira_extensora.png
-    - images/cadeira_flexora.png
-    - images/crucifixo.png
-    - images/desenvolvimento.png
     - images/elevacao_lateral.png
-    - images/esteira.png
-    - images/esteira2.png
-    - images/leg45.png
-    - images/leg_horizontal.png
-    - images/mesa_flexora.png
-    - images/panturrilha_sentado.png
-    - images/puxada_articulada.png
-    - images/remada_articulada_supinada.png
-    - images/supino_vertical.png
+    - images/escalador.png
+    - images/flexao.png
     - COPYING

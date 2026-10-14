@@ -66,96 +66,6 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   int _selectedIndex = 0;
   List<Map<String, dynamic?>>? expectedList;
   List<Weight?> weights = List<Weight?>.filled(16, null);
-  final List<String> remadaArticuladaSupinadaOptions = [
-    '5 kg',
-    '10 kg',
-    '15 kg',
-    '20 kg',
-    '25 kg',
-    '30 kg',
-    '35 kg',
-    '40 kg',
-    '45 kg',
-    '50 kg',
-    '55 kg',
-    '60 kg',
-    '65 kg',
-    '70 kg',
-    '75 kg'
-  ];
-  final List<String> puxadaArticuladaOptions = [
-    '5 kg',
-    '10 kg',
-    '15 kg',
-    '20 kg',
-    '25 kg',
-    '30 kg',
-    '35 kg',
-    '40 kg',
-    '45 kg',
-    '50 kg',
-    '55 kg',
-    '60 kg',
-    '65 kg',
-    '70 kg',
-    '75 kg'
-  ];
-  final List<String> supinoVerticalOptions = [
-    '5 kg',
-    '10 kg',
-    '15 kg',
-    '20 kg',
-    '25 kg',
-    '30 kg',
-    '35 kg',
-    '40 kg',
-    '45 kg',
-    '50 kg',
-    '55 kg',
-    '60 kg',
-    '65 kg',
-    '70 kg',
-    '75 kg'
-  ];
-  final List<String> crucifixoOptions = [
-    '5 kg',
-    '12 kg',
-    '19 kg',
-    '26 kg',
-    '33 kg',
-    '40 kg',
-    '47 kg',
-    '54 kg',
-    '61 kg',
-    '68 kg',
-    '75 kg',
-    '82 kg',
-    '89 kg',
-    '96 kg',
-    '103 kg',
-    '110 kg',
-    '117 kg',
-    '124 kg',
-    '131 kg',
-    '138 kg'
-  ];
-  final List<String> desenvolvimentoOptions = [
-    '5 kg',
-    '10 kg',
-    '15 kg',
-    '20 kg',
-    '25 kg',
-    '30 kg',
-    '35 kg',
-    '40 kg',
-    '45 kg',
-    '50 kg',
-    '55 kg',
-    '60 kg',
-    '65 kg',
-    '70 kg',
-    '75 kg'
-  ];
   final List<String> bicepsOptions = [
     '1 kg',
     '2 kg',
@@ -181,128 +91,17 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     '10 kg'
   ];
   final List<String> abdominalSupraSoloOptions = ['0 kg'];
-  final List<String> esteira1Options = ['0%', '3%', '6%', '9%', '12%', '15%'];
-  final List<String> cadeiraFlexoraOptions = [
-    '5 kg',
-    '12 kg',
-    '19 kg',
-    '26 kg',
-    '33 kg',
-    '40 kg',
-    '47 kg',
-    '54 kg',
-    '61 kg',
-    '68 kg',
-    '75 kg',
-    '82 kg',
-    '89 kg',
-    '96 kg',
-    '103 kg',
-    '110 kg',
-    '117 kg',
-    '124 kg',
-    '131 kg',
-    '138 kg'
-  ];
-  final List<String> cadeiraExtensoraOptions = [
-    '5 kg',
-    '12 kg',
-    '19 kg',
-    '26 kg',
-    '33 kg',
-    '40 kg',
-    '47 kg',
-    '54 kg',
-    '61 kg',
-    '68 kg',
-    '75 kg',
-    '82 kg',
-    '89 kg',
-    '96 kg',
-    '103 kg',
-    '110 kg',
-    '117 kg',
-    '124 kg',
-    '131 kg',
-    '138 kg'
-  ];
-  final List<String> legHorizontalOptions = [
-    '5 kg',
-    '15 kg',
-    '25 kg',
-    '35 kg',
-    '45 kg',
-    '55 kg',
-    '65 kg',
-    '75 kg',
-    '85 kg',
-    '95 kg',
-    '105 kg',
-    '115 kg',
-    '125 kg',
-    '135 kg',
-    '145 kg',
-    '155 kg',
-    '165 kg',
-    '175 kg',
-    '185 kg',
-    '195 kg'
-  ];
-  final List<String> cadeiraAbdutoraOptions = [
-    '5 kg',
-    '12 kg',
-    '19 kg',
-    '26 kg',
-    '33 kg',
-    '40 kg',
-    '47 kg',
-    '54 kg',
-    '61 kg',
-    '68 kg',
-    '75 kg',
-    '82 kg',
-    '89 kg',
-    '96 kg',
-    '103 kg',
-    '110 kg',
-    '117 kg',
-    '124 kg',
-    '131 kg',
-    '138 kg'
-  ];
-  final List<String> panturrilhaSentadoOptions = [
-    '10 kg',
-    '20 kg',
-    '30 kg',
-    '40 kg'
-  ];
-  final List<String> leg45Options = [
-    '10 kg',
-    '20 kg',
-    '30 kg',
-    '40 kg'
-  ];
-  final List<String> esteira2Options = ['0%', '3%', '6%', '9%', '12%', '15%'];
+  final List<String> flexaoOptions = ['0 kg'];
+  final List<String> escaladorOptions = ['0 kg'];
 
   MyHomePageState() {
     activitiesNow = Activities(
         date: DateTime.now().toIso8601String().substring(0, 10),
-        remadaArticuladaSupinada: 0,
-        puxadaArticulada: 0,
-        supinoVertical: 0,
-        crucifixo: 0,
-        desenvolvimento: 0,
         biceps: 0,
         elevacaoLateral: 0,
         abdominalSupraSolo: 0,
-        esteira1: 0,
-        cadeiraFlexora: 0,
-        cadeiraExtensora: 0,
-        legHorizontal: 0,
-        cadeiraAbdutora: 0,
-        panturrilhaSentado: 0,
-        leg45: 0,
-        esteira2: 0);
+        flexao: 0,
+        escalador: 0);
     setupDatabase().then((_) {
       verifyDatabase();
     });
@@ -336,49 +135,26 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       setState(() {
         activitiesNow = Activities(
             date: DateTime.now().toIso8601String().substring(0, 10),
-            remadaArticuladaSupinada: 0,
-            puxadaArticulada: 0,
-            supinoVertical: 0,
-            crucifixo: 0,
-            desenvolvimento: 0,
             biceps: 0,
             elevacaoLateral: 0,
             abdominalSupraSolo: 0,
-            esteira1: 0,
-            cadeiraFlexora: 0,
-            cadeiraExtensora: 0,
-            legHorizontal: 0,
-            cadeiraAbdutora: 0,
-            panturrilhaSentado: 0,
-            leg45: 0,
-            esteira2: 0);
+            flexao: 0,
+            escalador: 0);
       });
       insertActivities(activitiesNow);
     }
   }
 
   Future<void> initImages() async {
-    List<ByteData> dataList = List<ByteData>.filled(16, ByteData(0));
+    List<ByteData> dataList = List<ByteData>.filled(5, ByteData(0));
 
-    dataList[0] =
-        await rootBundle.load('images/remada_articulada_supinada.png');
-    dataList[1] = await rootBundle.load('images/puxada_articulada.png');
-    dataList[2] = await rootBundle.load('images/supino_vertical.png');
-    dataList[3] = await rootBundle.load('images/crucifixo.png');
-    dataList[4] = await rootBundle.load('images/desenvolvimento.png');
-    dataList[5] = await rootBundle.load('images/biceps.png');
-    dataList[6] = await rootBundle.load('images/elevacao_lateral.png');
-    dataList[7] = await rootBundle.load('images/abdominal_supra_solo.png');
-    dataList[8] = await rootBundle.load('images/esteira.png');
-    dataList[9] = await rootBundle.load('images/cadeira_flexora.png');
-    dataList[10] = await rootBundle.load('images/cadeira_extensora.png');
-    dataList[11] = await rootBundle.load('images/leg_horizontal.png');
-    dataList[12] = await rootBundle.load('images/cadeira_abdutora.png');
-    dataList[13] = await rootBundle.load('images/panturrilha_sentado.png');
-    dataList[14] = await rootBundle.load('images/leg45.png');
-    dataList[15] = await rootBundle.load('images/esteira2.png');
+    dataList[0] = await rootBundle.load('images/biceps.png');
+    dataList[1] = await rootBundle.load('images/elevacao_lateral.png');
+    dataList[2] = await rootBundle.load('images/abdominal_supra_solo.png');
+    dataList[3] = await rootBundle.load('images/flexao.png');
+    dataList[4] = await rootBundle.load('images/escalador.png');
 
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 5; i++) {
       imageList[i] = await loadImage(Uint8List.view(dataList[i].buffer), i);
     }
   }
@@ -404,22 +180,11 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       onCreate: (db, version) async {
         await db.execute('''CREATE TABLE Activities (
           date TEXT PRIMARY KEY,
-          remadaArticuladaSupinada INTEGER,
-          puxadaArticulada INTEGER,
-          supinoVertical INTEGER,
-          crucifixo INTEGER,
-          desenvolvimento INTEGER,
           biceps INTEGER,
           elevacaoLateral INTEGER,
           abdominalSupraSolo INTEGER,
-          esteira1 INTEGER,
-          cadeiraFlexora INTEGER,
-          cadeiraExtensora INTEGER,
-          legHorizontal INTEGER,
-          cadeiraAbdutora INTEGER,
-          panturrilhaSentado INTEGER,
-          leg45 INTEGER,
-          esteira2 INTEGER
+          flexao INTEGER,
+          escalador INTEGER
         )''');
         await db.execute('''CREATE TABLE Weight (
           activity TEXT PRIMARY KEY,
@@ -466,22 +231,11 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       for (final day in missingDays) {
         final activity = Activities(
           date: day.toIso8601String().substring(0, 10),
-          remadaArticuladaSupinada: 0,
-          puxadaArticulada: 0,
-          supinoVertical: 0,
-          crucifixo: 0,
-          desenvolvimento: 0,
           biceps: 0,
           elevacaoLateral: 0,
           abdominalSupraSolo: 0,
-          esteira1: 0,
-          cadeiraFlexora: 0,
-          cadeiraExtensora: 0,
-          legHorizontal: 0,
-          cadeiraAbdutora: 0,
-          panturrilhaSentado: 0,
-          leg45: 0,
-          esteira2: 0,
+          flexao: 0,
+          escalador: 0,
         );
         await insertActivities(activity);
       }
@@ -493,32 +247,13 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
     if (mapsActivities!.isNotEmpty) {
       setState(() {
-        activitiesNow?.remadaArticuladaSupinada =
-          mapsActivities.first['remadaArticuladaSupinada'];
-        activitiesNow?.puxadaArticulada =
-          mapsActivities.first['puxadaArticulada'];
-        activitiesNow?.supinoVertical =
-          mapsActivities.first['supinoVertical'];
-        activitiesNow?.crucifixo = mapsActivities.first['crucifixo'];
-        activitiesNow?.desenvolvimento =
-          mapsActivities.first['desenvolvimento'];
         activitiesNow?.biceps = mapsActivities.first['biceps'];
         activitiesNow?.elevacaoLateral =
           mapsActivities.first['elevacaoLateral'];
         activitiesNow?.abdominalSupraSolo =
           mapsActivities.first['abdominalSupraSolo'];
-        activitiesNow?.esteira1 = mapsActivities.first['esteira1'];
-        activitiesNow?.cadeiraFlexora =
-          mapsActivities.first['cadeiraFlexora'];
-        activitiesNow?.cadeiraExtensora =
-          mapsActivities.first['cadeiraExtensora'];
-        activitiesNow?.legHorizontal = mapsActivities.first['legHorizontal'];
-        activitiesNow?.cadeiraAbdutora =
-          mapsActivities.first['cadeiraAbdutora'];
-        activitiesNow?.panturrilhaSentado =
-          mapsActivities.first['panturrilhaSentado'];
-        activitiesNow?.leg45 = mapsActivities.first['leg45'];
-        activitiesNow?.esteira2 = mapsActivities.first['esteira2'];
+        activitiesNow?.flexao = mapsActivities.first['flexao'];
+        activitiesNow?.escalador = mapsActivities.first['escalador'];
       });
     } else if (mapsActivities.isEmpty) {
       await insertActivities(activitiesNow);
@@ -537,32 +272,14 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           }
         });
       } else if (weightMaps.isEmpty) {
-        await insertWeight(
-            Weight(activity: 'remadaArticuladaSupinada', message: '5 kg'));
-        await insertWeight(
-            Weight(activity: 'puxadaArticulada', message: '5 kg'));
-        await insertWeight(
-            Weight(activity: 'supinoVertical', message: '5 kg'));
-        await insertWeight(Weight(activity: 'crucifixo', message: '5 kg'));
-        await insertWeight(
-            Weight(activity: 'desenvolvimento', message: '5 kg'));
         await insertWeight(Weight(activity: 'biceps', message: '1 kg'));
         await insertWeight(
             Weight(activity: 'elevacaoLateral', message: '1 kg'));
         await insertWeight(
             Weight(activity: 'abdominalSupraSolo', message: '0 kg'));
-        await insertWeight(Weight(activity: 'esteira1', message: '0%'));
         await insertWeight(
-            Weight(activity: 'cadeiraFlexora', message: '5 kg'));
-        await insertWeight(
-            Weight(activity: 'cadeiraExtensora', message: '5 kg'));
-        await insertWeight(Weight(activity: 'legHorizontal', message: '5 kg'));
-        await insertWeight(
-            Weight(activity: 'cadeiraAbdutora', message: '5 kg'));
-        await insertWeight(
-            Weight(activity: 'panturrilhaSentado', message: '10 kg'));
-        await insertWeight(Weight(activity: 'leg45', message: '10 kg'));
-        await insertWeight(Weight(activity: 'esteira2', message: '0%'));
+            Weight(activity: 'flexao', message: '0 kg'));
+        await insertWeight(Weight(activity: 'escalador', message: '0 kg'));
         await verifyDatabase();
       }
     }
@@ -589,40 +306,18 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   Future<void> updateActivities(
-      int iRemadaArticuladaSupinada,
-      int iPuxadaArticulada,
-      int iSupinoVertical,
-      int iCrucifixo,
-      int iDesenvolvimento,
       int iBiceps,
       int iElevacaoLateral,
       int iAbdominalSupraSolo,
-      int iEsteira1,
-      int iCadeiraFlexora,
-      int iCadeiraExtensora,
-      int iLegHorizontal,
-      int iCadeiraAbdutora,
-      int iPanturrilhaSentado,
-      int iLeg45,
-      int iEsteira2) async {
+      int iFlexao,
+      int iEscalador) async {
     final db = database;
     setState(() {
-      activitiesNow?.remadaArticuladaSupinada += iRemadaArticuladaSupinada;
-      activitiesNow?.puxadaArticulada += iPuxadaArticulada;
-      activitiesNow?.supinoVertical += iSupinoVertical;
-      activitiesNow?.crucifixo += iCrucifixo;
-      activitiesNow?.desenvolvimento += iDesenvolvimento;
       activitiesNow?.biceps += iBiceps;
       activitiesNow?.elevacaoLateral += iElevacaoLateral;
       activitiesNow?.abdominalSupraSolo += iAbdominalSupraSolo;
-      activitiesNow?.esteira1 += iEsteira1;
-      activitiesNow?.cadeiraFlexora += iCadeiraFlexora;
-      activitiesNow?.cadeiraExtensora += iCadeiraExtensora;
-      activitiesNow?.legHorizontal += iLegHorizontal;
-      activitiesNow?.cadeiraAbdutora += iCadeiraAbdutora;
-      activitiesNow?.panturrilhaSentado += iPanturrilhaSentado;
-      activitiesNow?.leg45 += iLeg45;
-      activitiesNow?.esteira2 += iEsteira2;
+      activitiesNow?.flexao += iFlexao;
+      activitiesNow?.escalador += iEscalador;
     });
 
     await db?.update(
@@ -702,22 +397,11 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void _deleteAllActivities() async {
     final Database? db = database;
     await db?.delete('Activities');
-    activitiesNow?.remadaArticuladaSupinada = 0;
-    activitiesNow?.puxadaArticulada = 0;
-    activitiesNow?.supinoVertical = 0;
-    activitiesNow?.crucifixo = 0;
-    activitiesNow?.desenvolvimento = 0;
     activitiesNow?.biceps = 0;
     activitiesNow?.elevacaoLateral = 0;
     activitiesNow?.abdominalSupraSolo = 0;
-    activitiesNow?.esteira1 = 0;
-    activitiesNow?.cadeiraFlexora = 0;
-    activitiesNow?.cadeiraExtensora = 0;
-    activitiesNow?.legHorizontal = 0;
-    activitiesNow?.cadeiraAbdutora = 0;
-    activitiesNow?.panturrilhaSentado = 0;
-    activitiesNow?.leg45 = 0;
-    activitiesNow?.esteira2 = 0;
+    activitiesNow?.flexao = 0;
+    activitiesNow?.escalador = 0;
     await verifyDatabase();
   }
 
@@ -760,115 +444,12 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     ListTile(
-                      title: Text('Remada articulada supinada maq 01'),
+                      title: Text('Bíceps'),
                       trailing: DropdownButton<String>(
                         value: weights[0]?.message,
                         onChanged: (String? newValue) {
                           setState(() {
-                            weights[0] = Weight(
-                                activity: 'remadaArticuladaSupinada',
-                                message: newValue!);
-                            updateWeight('remadaArticuladaSupinada', newValue!);
-                          });
-                        },
-                        items: remadaArticuladaSupinadaOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Puxada articulada maq 03'),
-                      trailing: DropdownButton<String>(
-                        value: weights[1]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[1] = Weight(
-                                activity: 'puxadaArticulada',
-                                message: newValue!);
-                            updateWeight('puxadaArticulada', newValue!);
-                          });
-                        },
-                        items: puxadaArticuladaOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Supino maq 05'),
-                      trailing: DropdownButton<String>(
-                        value: weights[2]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[2] = Weight(
-                                activity: 'supinoVertical', message: newValue!);
-                            updateWeight('supinoVertical', newValue!);
-                          });
-                        },
-                        items: supinoVerticalOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Crucifixo maq 06'),
-                      trailing: DropdownButton<String>(
-                        value: weights[3]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[3] = Weight(
-                                activity: 'crucifixo', message: newValue!);
-                            updateWeight('crucifixo', newValue!);
-                          });
-                        },
-                        items: crucifixoOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Desenvolvimento maq 07'),
-                      trailing: DropdownButton<String>(
-                        value: weights[4]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[4] = Weight(
-                                activity: 'desenvolvimento',
-                                message: newValue!);
-                            updateWeight('desenvolvimento', newValue!);
-                          });
-                        },
-                        items: desenvolvimentoOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Bíceps'),
-                      trailing: DropdownButton<String>(
-                        value: weights[5]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[5] =
+                            weights[0] =
                                 Weight(activity: 'biceps', message: newValue!);
                             updateWeight('biceps', newValue!);
                           });
@@ -885,10 +466,10 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     ListTile(
                       title: Text('Elevação lateral'),
                       trailing: DropdownButton<String>(
-                        value: weights[6]?.message,
+                        value: weights[1]?.message,
                         onChanged: (String? newValue) {
                           setState(() {
-                            weights[6] = Weight(
+                            weights[1] = Weight(
                                 activity: 'elevacaoLateral',
                                 message: newValue!);
                             updateWeight('elevacaoLateral', newValue!);
@@ -906,10 +487,10 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     ListTile(
                       title: Text('Abdominal supra solo'),
                       trailing: DropdownButton<String>(
-                        value: weights[7]?.message,
+                        value: weights[2]?.message,
                         onChanged: (String? newValue) {
                           setState(() {
-                            weights[7] = Weight(
+                            weights[2] = Weight(
                                 activity: 'abdominalSupraSolo',
                                 message: newValue!);
                             updateWeight('abdominalSupraSolo', newValue!);
@@ -925,17 +506,17 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       ),
                     ),
                     ListTile(
-                      title: Text('Esteira (min)'),
+                      title: Text('Flexão'),
                       trailing: DropdownButton<String>(
-                        value: weights[8]?.message,
+                        value: weights[3]?.message,
                         onChanged: (String? newValue) {
                           setState(() {
-                            weights[8] = Weight(
-                                activity: 'esteira1', message: newValue!);
-                            updateWeight('esteira1', newValue!);
+                            weights[3] = Weight(
+                                activity: 'flexao', message: newValue!);
+                            updateWeight('flexao', newValue!);
                           });
                         },
-                        items: esteira1Options
+                        items: flexaoOptions
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -945,140 +526,17 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       ),
                     ),
                     ListTile(
-                      title: Text('Cadeira flexora maq 12'),
+                      title: Text('Escalador'),
                       trailing: DropdownButton<String>(
-                        value: weights[9]?.message,
+                        value: weights[4]?.message,
                         onChanged: (String? newValue) {
                           setState(() {
-                            weights[9] = Weight(
-                                activity: 'cadeiraFlexora', message: newValue!);
-                            updateWeight('cadeiraFlexora', newValue!);
+                            weights[4] = Weight(
+                                activity: 'escalador', message: newValue!);
+                            updateWeight('escalador', newValue!);
                           });
                         },
-                        items: cadeiraFlexoraOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Cadeira extensora maq 13'),
-                      trailing: DropdownButton<String>(
-                        value: weights[10]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[10] = Weight(
-                                activity: 'cadeiraExtensora',
-                                message: newValue!);
-                            updateWeight('cadeiraExtensora', newValue!);
-                          });
-                        },
-                        items: cadeiraExtensoraOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Leg horizontal maq 14'),
-                      trailing: DropdownButton<String>(
-                        value: weights[11]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[11] = Weight(
-                                activity: 'legHorizontal', message: newValue!);
-                            updateWeight('legHorizontal', newValue!);
-                          });
-                        },
-                        items: legHorizontalOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Cadeira abdutora maq 16'),
-                      trailing: DropdownButton<String>(
-                        value: weights[12]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[12] = Weight(
-                                activity: 'cadeiraAbdutora',
-                                message: newValue!);
-                            updateWeight('cadeiraAbdutora', newValue!);
-                          });
-                        },
-                        items: cadeiraAbdutoraOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Panturrilha sentado maq 26'),
-                      trailing: DropdownButton<String>(
-                        value: weights[13]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[13] = Weight(
-                                activity: 'panturrilhaSentado',
-                                message: newValue!);
-                            updateWeight('panturrilhaSentado', newValue!);
-                          });
-                        },
-                        items: panturrilhaSentadoOptions
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Leg 45 maq 29'),
-                      trailing: DropdownButton<String>(
-                        value: weights[14]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[14] =
-                                Weight(activity: 'leg45', message: newValue!);
-                            updateWeight('leg45', newValue!);
-                          });
-                        },
-                        items: leg45Options
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Esteira (min)'),
-                      trailing: DropdownButton<String>(
-                        value: weights[15]?.message,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            weights[15] = Weight(
-                                activity: 'esteira2', message: newValue!);
-                            updateWeight('esteira2', newValue!);
-                          });
-                        },
-                        items: esteira2Options
+                        items: escaladorOptions
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -1181,42 +639,20 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         while (expectedList!.length < 30) {
           expectedList!.insert(0, {
             'date': "",
-            'remadaArticuladaSupinada': 0,
-            'puxadaArticulada': 0,
-            'supinoVertical': 0,
-            'crucifixo': 0,
-            'desenvolvimento': 0,
             'biceps': 0,
             'elevacaoLateral': 0,
             'abdominalSupraSolo': 0,
-            'esteira1': 0,
-            'cadeiraFlexora': 0,
-            'cadeiraExtensora': 0,
-            'legHorizontal': 0,
-            'cadeiraAbdutora': 0,
-            'panturrilhaSentado': 0,
-            'leg45': 0,
-            'esteira2': 0
+            'flexao': 0,
+            'escalador': 0
           });
         }
       }
       expectedList!.forEach((element) => {
-            treino1Counter.add(element["remadaArticuladaSupinada"].toDouble() +
-                element["puxadaArticulada"].toDouble() +
-                element["supinoVertical"].toDouble() +
-                element["crucifixo"].toDouble() +
-                element["desenvolvimento"].toDouble() +
-                element["biceps"].toDouble() +
+            treino1Counter.add(element["biceps"].toDouble() +
                 element["elevacaoLateral"].toDouble() +
                 element["abdominalSupraSolo"].toDouble() +
-                element["esteira1"].toDouble()),
-            treino2Counter.add(element["cadeiraFlexora"].toDouble() +
-                element["cadeiraExtensora"].toDouble() +
-                element["legHorizontal"].toDouble() +
-                element["cadeiraAbdutora"].toDouble() +
-                element["panturrilhaSentado"].toDouble() +
-                element["leg45"].toDouble() +
-                element["esteira2"].toDouble()),
+                element["flexao"].toDouble()),
+            treino2Counter.add(element["escalador"].toDouble()),
           });
     } else {
       treino1Counter = [
@@ -1368,94 +804,44 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     buildActivityColumn(
                         context: context,
                         onTap: () => updateActivities(
-                            15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        activityValue: activitiesNow?.remadaArticuladaSupinada,
+                            15, 0, 0, 0, 0),
+                        activityValue: activitiesNow?.biceps,
                         activityTotal: 45,
-                        label: 'Remada articulada\n supinada maq 01',
+                        label: 'Bíceps\n',
                         weightMessage: weights[0]?.message ?? '',
                         image: imageList[0]),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
                     buildActivityColumn(
                         context: context,
                         onTap: () => updateActivities(
-                            0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        activityValue: activitiesNow?.puxadaArticulada,
+                            0, 15, 0, 0, 0),
+                        activityValue: activitiesNow?.elevacaoLateral,
                         activityTotal: 45,
-                        label: 'Puxada articulada\n maq 03',
+                        label: 'Elevação lateral\n',
                         weightMessage: weights[1]?.message ?? '',
                         image: imageList[1]),
                     buildActivityColumn(
                         context: context,
                         onTap: () => updateActivities(
-                            0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        activityValue: activitiesNow?.supinoVertical,
-                        activityTotal: 45,
-                        label: 'Supino\n maq 05',
-                        weightMessage: weights[2]?.message ?? '',
-                        image: imageList[2]),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    buildActivityColumn(
-                        context: context,
-                        onTap: () => updateActivities(
-                            0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        activityValue: activitiesNow?.crucifixo,
-                        activityTotal: 45,
-                        label: 'Crucifixo\n maq 06',
-                        weightMessage: weights[3]?.message ?? '',
-                        image: imageList[3]),
-                    buildActivityColumn(
-                        context: context,
-                        onTap: () => updateActivities(
-                            0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        activityValue: activitiesNow?.desenvolvimento,
-                        activityTotal: 45,
-                        label: 'Desenvolvimento\n maq 07',
-                        weightMessage: weights[4]?.message ?? '',
-                        image: imageList[4]),
-                    buildActivityColumn(
-                        context: context,
-                        onTap: () => updateActivities(
-                            0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        activityValue: activitiesNow?.biceps,
-                        activityTotal: 45,
-                        label: 'Bíceps\n',
-                        weightMessage: weights[5]?.message ?? '',
-                        image: imageList[5]),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    buildActivityColumn(
-                        context: context,
-                        onTap: () => updateActivities(
-                            0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        activityValue: activitiesNow?.elevacaoLateral,
-                        activityTotal: 45,
-                        label: 'Elevação lateral\n',
-                        weightMessage: weights[6]?.message ?? '',
-                        image: imageList[6]),
-                    buildActivityColumn(
-                        context: context,
-                        onTap: () => updateActivities(
-                            0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0),
+                            0, 0, 15, 0, 0),
                         activityValue: activitiesNow?.abdominalSupraSolo,
                         activityTotal: 45,
                         label: 'Abdominal supra\n solo',
-                        weightMessage: weights[7]?.message ?? '',
-                        image: imageList[7]),
+                        weightMessage: weights[2]?.message ?? '',
+                        image: imageList[2]),
                     buildActivityColumn(
                         context: context,
                         onTap: () => updateActivities(
-                            0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0),
-                        activityValue: activitiesNow?.esteira1,
+                            0, 0, 0, 15, 0),
+                        activityValue: activitiesNow?.flexao,
                         activityTotal: 45,
-                        label: 'Esteira (min)\n',
-                        weightMessage: weights[8]?.message ?? '',
-                        image: imageList[8]),
+                        label: 'Flexão\n',
+                        weightMessage: weights[3]?.message ?? '',
+                        image: imageList[3]),
                   ],
                 ),
               ],
@@ -1469,77 +855,14 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       children: <Widget>[
                         buildActivityColumn(
                             context: context,
-                            onTap: () => updateActivities(0, 0, 0, 0, 0, 0, 0,
-                                0, 0, 15, 0, 0, 0, 0, 0, 0),
-                            activityValue: activitiesNow?.cadeiraFlexora,
+                            onTap: () => updateActivities(
+                              0, 0, 0, 0, 15
+                            ),
+                            activityValue: activitiesNow?.escalador,
                             activityTotal: 45,
-                            label: 'Cadeira flexora\n maq 12',
-                            weightMessage: weights[9]?.message ?? '',
-                            image: imageList[9]),
-                        buildActivityColumn(
-                            context: context,
-                            onTap: () => updateActivities(0, 0, 0, 0, 0, 0, 0,
-                                0, 0, 0, 15, 0, 0, 0, 0, 0),
-                            activityValue: activitiesNow?.cadeiraExtensora,
-                            activityTotal: 45,
-                            label: 'Cadeira extensora\n maq 13',
-                            weightMessage: weights[10]?.message ?? '',
-                            image: imageList[10]),
-                        buildActivityColumn(
-                            context: context,
-                            onTap: () => updateActivities(0, 0, 0, 0, 0, 0, 0,
-                                0, 0, 0, 0, 15, 0, 0, 0, 0),
-                            activityValue: activitiesNow?.legHorizontal,
-                            activityTotal: 45,
-                            label: 'Leg horizontal\n maq 14',
-                            weightMessage: weights[11]?.message ?? '',
-                            image: imageList[11]),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        buildActivityColumn(
-                            context: context,
-                            onTap: () => updateActivities(0, 0, 0, 0, 0, 0, 0,
-                                0, 0, 0, 0, 0, 15, 0, 0, 0),
-                            activityValue: activitiesNow?.cadeiraAbdutora,
-                            activityTotal: 45,
-                            label: 'Cadeira abdutora\n maq 16',
-                            weightMessage: weights[12]?.message ?? '',
-                            image: imageList[12]),
-                        buildActivityColumn(
-                            context: context,
-                            onTap: () => updateActivities(0, 0, 0, 0, 0, 0, 0,
-                                0, 0, 0, 0, 0, 0, 15, 0, 0),
-                            activityValue: activitiesNow?.panturrilhaSentado,
-                            activityTotal: 45,
-                            label: 'Panturrilha sentado\n maq 26',
-                            weightMessage: weights[13]?.message ?? '',
-                            image: imageList[13]),
-                        buildActivityColumn(
-                            context: context,
-                            onTap: () => updateActivities(0, 0, 0, 0, 0, 0, 0,
-                                0, 0, 0, 0, 0, 0, 0, 15, 0),
-                            activityValue: activitiesNow?.leg45,
-                            activityTotal: 45,
-                            label: 'Leg 45\n maq 29',
-                            weightMessage: weights[14]?.message ?? '',
-                            image: imageList[14]),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        buildActivityColumn(
-                            context: context,
-                            onTap: () => updateActivities(0, 0, 0, 0, 0, 0, 0,
-                                0, 0, 0, 0, 0, 0, 0, 0, 15),
-                            activityValue: activitiesNow?.esteira2,
-                            activityTotal: 45,
-                            label: 'Esteira (min)\n',
-                            weightMessage: weights[15]?.message ?? '',
-                            image: imageList[15]),
+                            label: 'Escalador',
+                            weightMessage: weights[4]?.message ?? '',
+                            image: imageList[4]),
                       ],
                     ),
                   ],
