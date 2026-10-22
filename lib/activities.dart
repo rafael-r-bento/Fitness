@@ -23,6 +23,7 @@ class Activities {
   int abdominalSupraSolo;
   int flexao;
   int escalador;
+  int agachamento;
 
   Activities(
       {this.date = "",
@@ -30,7 +31,8 @@ class Activities {
       this.elevacaoLateral = 0,
       this.abdominalSupraSolo = 0,
       this.flexao = 0,
-      this.escalador = 0});
+      this.escalador = 0,
+      this.agachamento = 0});
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,7 +41,8 @@ class Activities {
       'elevacaoLateral': elevacaoLateral,
       'abdominalSupraSolo': abdominalSupraSolo,
       'flexao': flexao,
-      'escalador': escalador
+      'escalador': escalador,
+      'agachamento': agachamento
     };
   }
 }

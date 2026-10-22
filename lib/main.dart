@@ -93,6 +93,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<String> abdominalSupraSoloOptions = ['0 kg'];
   final List<String> flexaoOptions = ['0 kg'];
   final List<String> escaladorOptions = ['0 kg'];
+  final List<String> agachamentoOptions = ['0 kg'];
 
   MyHomePageState() {
     activitiesNow = Activities(
@@ -101,7 +102,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         elevacaoLateral: 0,
         abdominalSupraSolo: 0,
         flexao: 0,
-        escalador: 0);
+        escalador: 0,
+        agachamento: 0);
     setupDatabase().then((_) {
       verifyDatabase();
     });
@@ -139,22 +141,24 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             elevacaoLateral: 0,
             abdominalSupraSolo: 0,
             flexao: 0,
-            escalador: 0);
+            escalador: 0,
+            agachamento: 0);
       });
       insertActivities(activitiesNow);
     }
   }
 
   Future<void> initImages() async {
-    List<ByteData> dataList = List<ByteData>.filled(5, ByteData(0));
+    List<ByteData> dataList = List<ByteData>.filled(6, ByteData(0));
 
     dataList[0] = await rootBundle.load('images/biceps.png');
     dataList[1] = await rootBundle.load('images/elevacao_lateral.png');
     dataList[2] = await rootBundle.load('images/abdominal_supra_solo.png');
     dataList[3] = await rootBundle.load('images/flexao.png');
     dataList[4] = await rootBundle.load('images/escalador.png');
+    dataList[5] = await rootBundle.load('images/agachamento.png');
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
       imageList[i] = await loadImage(Uint8List.view(dataList[i].buffer), i);
     }
   }
@@ -184,7 +188,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           elevacaoLateral INTEGER,
           abdominalSupraSolo INTEGER,
           flexao INTEGER,
-          escalador INTEGER
+          escalador INTEGER,
+          agachamento INTEGER
         )''');
         await db.execute('''CREATE TABLE Weight (
           activity TEXT PRIMARY KEY,
@@ -236,6 +241,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           abdominalSupraSolo: 0,
           flexao: 0,
           escalador: 0,
+          agachamento: 0
         );
         await insertActivities(activity);
       }
@@ -254,6 +260,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           mapsActivities.first['abdominalSupraSolo'];
         activitiesNow?.flexao = mapsActivities.first['flexao'];
         activitiesNow?.escalador = mapsActivities.first['escalador'];
+        activitiesNow?.agachamento = mapsActivities.first['agachamento'];
       });
     } else if (mapsActivities.isEmpty) {
       await insertActivities(activitiesNow);
@@ -280,6 +287,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         await insertWeight(
             Weight(activity: 'flexao', message: '0 kg'));
         await insertWeight(Weight(activity: 'escalador', message: '0 kg'));
+        await insertWeight(Weight(activity: 'agachamento', message: '0 kg'));
         await verifyDatabase();
       }
     }
@@ -310,7 +318,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       int iElevacaoLateral,
       int iAbdominalSupraSolo,
       int iFlexao,
-      int iEscalador) async {
+      int iEscalador,
+      int iAgachamento) async {
     final db = database;
     setState(() {
       activitiesNow?.biceps += iBiceps;
@@ -318,6 +327,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       activitiesNow?.abdominalSupraSolo += iAbdominalSupraSolo;
       activitiesNow?.flexao += iFlexao;
       activitiesNow?.escalador += iEscalador;
+      activitiesNow?.agachamento += iAgachamento;
     });
 
     await db?.update(
@@ -402,6 +412,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     activitiesNow?.abdominalSupraSolo = 0;
     activitiesNow?.flexao = 0;
     activitiesNow?.escalador = 0;
+    activitiesNow?.agachamento = 0;
     await verifyDatabase();
   }
 
@@ -545,6 +556,26 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         }).toList(),
                       ),
                     ),
+                    ListTile(
+                      title: Text('Agachamento'),
+                      trailing: DropdownButton<String>(
+                        value: weights[5]?.message,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                              weights[5] = Weight(
+                              activity: 'agachamento', message: newValue!);
+                              updateWeight('agachamento', newValue!);
+                          });
+                        },
+                        items: agachamentoOptions
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
                     Divider(),
                     ListView(
                       shrinkWrap: true,
@@ -643,7 +674,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             'elevacaoLateral': 0,
             'abdominalSupraSolo': 0,
             'flexao': 0,
-            'escalador': 0
+            'escalador': 0,
+            'agachamento': 0
           });
         }
       }
@@ -652,7 +684,8 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 element["elevacaoLateral"].toDouble() +
                 element["abdominalSupraSolo"].toDouble() +
                 element["flexao"].toDouble()),
-            treino2Counter.add(element["escalador"].toDouble()),
+            treino2Counter.add(element["escalador"].toDouble() +
+              element["agachamento"].toDouble()),
           });
     } else {
       treino1Counter = [
@@ -804,12 +837,21 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     buildActivityColumn(
                         context: context,
                         onTap: () => updateActivities(
-                            15, 0, 0, 0, 0),
+                            15, 0, 0, 0, 0, 0),
                         activityValue: activitiesNow?.biceps,
                         activityTotal: 45,
                         label: 'Bíceps\n',
                         weightMessage: weights[0]?.message ?? '',
                         image: imageList[0]),
+                    buildActivityColumn(
+                        context: context,
+                        onTap: () => updateActivities(
+                            0, 15, 0, 0, 0, 0),
+                        activityValue: activitiesNow?.elevacaoLateral,
+                        activityTotal: 45,
+                        label: 'Elevação lateral\n',
+                        weightMessage: weights[1]?.message ?? '',
+                        image: imageList[1])
                   ],
                 ),
                 Row(
@@ -818,16 +860,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     buildActivityColumn(
                         context: context,
                         onTap: () => updateActivities(
-                            0, 15, 0, 0, 0),
-                        activityValue: activitiesNow?.elevacaoLateral,
-                        activityTotal: 45,
-                        label: 'Elevação lateral\n',
-                        weightMessage: weights[1]?.message ?? '',
-                        image: imageList[1]),
-                    buildActivityColumn(
-                        context: context,
-                        onTap: () => updateActivities(
-                            0, 0, 15, 0, 0),
+                            0, 0, 15, 0, 0, 0),
                         activityValue: activitiesNow?.abdominalSupraSolo,
                         activityTotal: 45,
                         label: 'Abdominal supra\n solo',
@@ -836,7 +869,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     buildActivityColumn(
                         context: context,
                         onTap: () => updateActivities(
-                            0, 0, 0, 15, 0),
+                            0, 0, 0, 15, 0, 0),
                         activityValue: activitiesNow?.flexao,
                         activityTotal: 45,
                         label: 'Flexão\n',
@@ -856,13 +889,23 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         buildActivityColumn(
                             context: context,
                             onTap: () => updateActivities(
-                              0, 0, 0, 0, 15
+                              0, 0, 0, 0, 15, 0
                             ),
                             activityValue: activitiesNow?.escalador,
                             activityTotal: 45,
                             label: 'Escalador',
                             weightMessage: weights[4]?.message ?? '',
                             image: imageList[4]),
+                         buildActivityColumn(
+                            context: context,
+                            onTap: () => updateActivities(
+                              0, 0, 0, 0, 0, 15
+                            ),
+                            activityValue: activitiesNow?.agachamento,
+                            activityTotal: 45,
+                            label: 'Agachamento',
+                            weightMessage: weights[5]?.message ?? '',
+                            image: imageList[5]),
                       ],
                     ),
                   ],

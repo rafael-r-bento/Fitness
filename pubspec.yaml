@@ -30,8 +30,9 @@ flutter:
   uses-material-design: true
 
   assets:
-    - images/burpees_in_room.png
+    - images/agachamento.png
     - images/abdominal_supra_solo.png
+    - images/burpees_in_room.png
     - images/biceps.png
     - images/elevacao_lateral.png
     - images/escalador.png
